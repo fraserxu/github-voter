@@ -13,7 +13,7 @@
           <a href="https://github.com/login/oauth/authorize?client_id=5387f423bb87ddaa5e30&scope=public_repo">Login</a>
         </span>
         <span v-if="user">
-          <a href="https://github.com/login/oauth/authorize?client_id=5387f423bb87ddaa5e30&scope=public_repo">{{user.login}}</a>
+          <a :href="user.html_url">{{user.login}}</a>
         </span>
       </span>
     </div>

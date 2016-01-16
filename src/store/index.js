@@ -2,14 +2,13 @@ import { EventEmitter } from 'events'
 import { polyfill } from 'es6-promise'
 import fetch from 'isomorphic-fetch'
 
+import { getCookie } from './cookie'
+
 polyfill()
 
 const owner = 'fraserxu'
 const repo = 'github-voter'
 const store = new EventEmitter()
-
-// issue api: https://api.github.com/repos/:owner/:repo/issues
-// auth server: https://github-voter.herokuapp.com/
 
 store.fetchIssues = token => {
   return fetch(`https://api.github.com/repos/${owner}/${repo}/issues`)
@@ -20,6 +19,23 @@ store.fetchIssues = token => {
 
 store.getUser = (token) => {
   return fetch(`https://api.github.com/user?access_token=${token}`)
+    .then(res => {
+      return res.json()
+    })
+}
+
+store.vote = (number) => {
+  const token = getCookie('oauth-token')
+  return fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${number}/comments?access_token=${token}`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        body: ':+1:'
+      })
+    })
     .then(res => {
       return res.json()
     })

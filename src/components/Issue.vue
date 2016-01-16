@@ -1,8 +1,9 @@
 <template>
   <div class="issue">
     <span class="index">{{index}}.</span>
+    <span class="votearrow" v-on:click="vote(issue.number)"></span>
     <p>
-      <a class="title" :href="issue.html_ur" target="_blank">{{{issue.title}}}</a>
+      <a class="title" :href="issue.html_url" target="_blank">{{{issue.title}}}</a>
       <span class="domain">
         ({{issue.html_url}})
       </span>
@@ -21,11 +22,20 @@
 </template>
 
 <script>
+import store from '../store'
+
 export default {
   name: 'Issue',
   props: {
     issue: Object,
     index: Number
+  },
+  methods: {
+    vote (number) {
+      store.vote(number).then(res => {
+        console.log('vote success.')
+      })
+    }
   }
 }
 </script>
@@ -33,13 +43,23 @@ export default {
 <style lang="stylus">
 @import "../variables.styl"
 .issue
-  padding 2px 0 2px 40px
+  padding 2px 0 2px 30px
   position relative
   transition background-color .2s ease
   p
     margin 2px 0
+    padding-left 15px
   .title:visited
       color $gray
+  .votearrow
+    cursor: pointer
+    position absolute
+    width 10px
+    height 10px
+    border 0px
+    margin 5px 2px 6px
+    background url("https://news.ycombinator.com/grayarrow2x.gif") no-repeat
+    background-size: 10px
   .index
     color $gray
     position absolute
