@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import VueAsyncData from 'vue-async-data'
+
 import { domain, fromNow } from './filters'
 import App from './components/App.vue'
 import EventsView from './components/EventsView.vue'
@@ -9,6 +11,7 @@ import OauthError from './components/OauthError.vue'
 
 // install router
 Vue.use(Router)
+Vue.use(VueAsyncData)
 
 // register filters globally
 Vue.filter('fromNow', fromNow)

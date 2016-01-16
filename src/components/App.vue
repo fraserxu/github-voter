@@ -9,7 +9,12 @@
       <span class="source">
         Built with <a href="http://vuejs.org" target="_blank">Vue.js</a> |
         <a href="https://github.com/fraserxu/github-voter" target="_blank">Source</a> |
-        <a href="https://github.com/login/oauth/authorize?client_id=5387f423bb87ddaa5e30&scope=public_repo">Login</a>
+        <span v-show="!user">
+          <a href="https://github.com/login/oauth/authorize?client_id=5387f423bb87ddaa5e30&scope=public_repo">Login</a>
+        </span>
+        <span v-if="user">
+          <a href="https://github.com/login/oauth/authorize?client_id=5387f423bb87ddaa5e30&scope=public_repo">{{user.login}}</a>
+        </span>
       </span>
     </div>
     <!-- main view -->
@@ -21,6 +26,34 @@
     </router-view>
   </div>
 </template>
+
+<script>
+import { getCookie } from '../store/cookie'
+import store from '../store'
+
+export default {
+  name: 'App',
+
+  data () {
+    return {
+      user: null
+    }
+  },
+
+  asyncData () {
+    const token = getCookie('oauth-token')
+    if (token) {
+      return store.getUser(token)
+        .then(user => {
+          return {
+            user
+          }
+        })
+    }
+  }
+
+}
+</script>
 
 <style lang="stylus">
 @import "../variables.styl"

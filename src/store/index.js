@@ -11,8 +11,15 @@ const store = new EventEmitter()
 // issue api: https://api.github.com/repos/:owner/:repo/issues
 // auth server: https://github-voter.herokuapp.com/
 
-store.fetchIssues = id => {
+store.fetchIssues = token => {
   return fetch(`https://api.github.com/repos/${owner}/${repo}/issues`)
+    .then(res => {
+      return res.json()
+    })
+}
+
+store.getUser = (token) => {
+  return fetch(`https://api.github.com/user?access_token=${token}`)
     .then(res => {
       return res.json()
     })
