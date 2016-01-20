@@ -18,7 +18,7 @@ export default {
         store.getToken(code)
           .then(res => {
             if (!res.error) {
-              setCookie('oauth-token', res.token)
+              setCookie('oauth-token', res.access_token)
               const { router } = transition.to
               router.go({
                 path: '/events'

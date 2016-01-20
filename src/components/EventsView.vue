@@ -1,7 +1,14 @@
 <template>
-  <div class="news-view" :class="{ loading: !issues.length }">
+  <div class="news-view" :class="{ loading: isLoading }">
+    <!-- not found -->
+    <not-found
+      v-if="error"
+      :error="error">
+    </not-found>
+
     <!-- issue list -->
     <issue
+      v-if="!error"
       v-for="issue in issues"
       :issue="issue"
       :index="$index | formatItemIndex"
@@ -13,17 +20,21 @@
 <script>
 import store from '../store'
 import Issue from './Issue.vue'
+import NotFound from './NotFoundView.vue'
 
 export default {
   name: 'EventsView',
 
   components: {
-    Issue
+    Issue,
+    NotFound
   },
 
   data () {
     return {
-      issues: []
+      issues: [],
+      isLoading: false,
+      error: null
     }
   },
 
@@ -31,9 +42,18 @@ export default {
     data ({ to }) {
       return store.fetchIssues()
         .then(issues => {
-          return ({
-            issues
-          })
+          if (issues.message === 'Not Found') {
+            return {
+              issues: [],
+              error: issues,
+              isLoading: false
+            }
+          } else {
+            return ({
+              issues,
+              isLoading: false
+            })
+          }
         })
     }
   },

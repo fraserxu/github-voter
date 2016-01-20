@@ -42,7 +42,12 @@ store.vote = (number) => {
 }
 
 store.getToken = code => {
-  return fetch(`https://github-voter.herokuapp.com/authenticate/${code}`)
+  return fetch(`http://localhost:4000/authenticate/${code}`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
     .then(res => {
       return res.json()
     })
