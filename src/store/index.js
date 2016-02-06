@@ -2,12 +2,13 @@ import { EventEmitter } from 'events'
 import { polyfill } from 'es6-promise'
 import fetch from 'isomorphic-fetch'
 
+import config from 'json!../../config.json'
 import { getCookie } from './cookie'
 
 polyfill()
 
-const owner = 'fraserxu'
-const repo = 'github-voter'
+const owner = config.owner || 'fraserxu'
+const repo = config.repo || 'github-voter'
 const store = new EventEmitter()
 
 store.fetchIssues = token => {
@@ -42,7 +43,7 @@ store.vote = (number) => {
 }
 
 store.getToken = code => {
-  return fetch(`http://localhost:4000/authenticate/${code}`, {
+  return fetch(`https://whispering-headland-4014.herokuapp.com/authenticate/${code}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
