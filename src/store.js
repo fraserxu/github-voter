@@ -33,13 +33,10 @@ const actions = {
   },
 
   fetchIssues: ({ dispatch }) => {
-    const token = getCookie('oauth-token')
-    if (token) {
-      api.fetchIssues(token)
-        .then(issues => {
-          dispatch(FETCH_ISSUES, issues)
-        })
-    }
+    api.fetchIssues()
+      .then(issues => {
+        dispatch(FETCH_ISSUES, issues)
+      })
   }
 }
 

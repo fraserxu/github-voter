@@ -11,7 +11,7 @@ const owner = config.owner || 'fraserxu'
 const repo = config.repo || 'github-voter'
 const api = new EventEmitter()
 
-api.fetchIssues = (token) => {
+api.fetchIssues = () => {
   return fetch(`https://api.github.com/repos/${owner}/${repo}/issues`)
     .then(res => {
       return res.json()
