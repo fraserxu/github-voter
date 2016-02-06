@@ -8,7 +8,7 @@ mkdir -p dist
 
 npm run build
 
-cp -r index.html static CNAME dist
+cp -r index.html callback.html static CNAME dist
 
 surge dist github-voter.frasexu.me
 
