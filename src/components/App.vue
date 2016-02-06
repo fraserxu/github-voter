@@ -2,15 +2,15 @@
   <div id="wrapper">
     <!-- header -->
     <div id="header">
-      <a id="yc" href="http://www.ycombinator.com">
-        <img src="https://news.ycombinator.com/y18.gif">
+      <a id="yc" href="https://github.com/fraserxu/github-voter">
+        <img src="/static/logo.png">
       </a>
       <h1><a href="#/">Github Voter</a></h1>
       <span class="source">
         Built with <a href="http://vuejs.org" target="_blank">Vue.js</a> |
         <a href="https://github.com/fraserxu/github-voter" target="_blank">Source</a> |
         <span v-show="!user">
-          <a href="https://github.com/login/oauth/authorize?client_id=5387f423bb87ddaa5e30&scope=public_repo">Login</a>
+          <a :href="oauthUrl">Login</a>
         </span>
         <span v-if="user">
           <a :href="user.html_url">{{user.login}}</a>
@@ -28,30 +28,26 @@
 </template>
 
 <script>
-import { getCookie } from '../store/cookie'
+import { getCookie } from '../utils/cookie'
 import store from '../store'
+import config from 'json!../../config.json'
+
+const { getUser } = store.actions
 
 export default {
   name: 'App',
 
   data () {
     return {
-      user: null
+      oauthUrl: `https://github.com/login/oauth/authorize?client_id=${config.client_id}&scope=${config.scope}`
     }
   },
 
-  asyncData () {
-    const token = getCookie('oauth-token')
-    if (token) {
-      return store.getUser(token)
-        .then(user => {
-          return {
-            user
-          }
-        })
+  computed: {
+    user () {
+      return store.state.user
     }
   }
-
 }
 </script>
 
@@ -104,6 +100,7 @@ a
   vertical-align middle
   img
     vertical-align middle
+    width 18px
 .view
   position absolute
   background-color $bg

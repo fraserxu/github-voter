@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import store from '../store'
-import { setCookie} from '../store/cookie'
+import api from '../utils/api'
+import { setCookie} from '../utils/cookie'
 
 export default {
   name: 'Oauth',
@@ -15,7 +15,7 @@ export default {
     canActivate (transition) {
       const code = transition.to.query.code
       if (code) {
-        store.getToken(code)
+        api.getToken(code)
           .then(res => {
             if (!res.error) {
               setCookie('oauth-token', res.access_token)

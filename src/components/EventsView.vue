@@ -22,6 +22,8 @@ import store from '../store'
 import Issue from './Issue.vue'
 import NotFound from './NotFoundView.vue'
 
+const { fetchIssues } = store.actions
+
 export default {
   name: 'EventsView',
 
@@ -32,30 +34,19 @@ export default {
 
   data () {
     return {
-      issues: [],
       isLoading: false,
       error: null
     }
   },
 
-  route: {
-    data ({ to }) {
-      return store.fetchIssues()
-        .then(issues => {
-          if (issues.message === 'Not Found') {
-            return {
-              issues: [],
-              error: issues,
-              isLoading: false
-            }
-          } else {
-            return ({
-              issues,
-              isLoading: false
-            })
-          }
-        })
+  computed: {
+    issues () {
+      return store.state.issues
     }
+  },
+
+  created () {
+    fetchIssues()
   },
 
   filters: {

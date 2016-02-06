@@ -1,7 +1,7 @@
 <template>
   <div class="issue">
     <span class="index">{{index}}.</span>
-    <span class="votearrow" v-on:click="vote(issue.number)"></span>
+    <span v-if="user" class="votearrow" v-on:click="vote(issue.number)"></span>
     <p>
       <a class="title" :href="issue.html_url" target="_blank">{{{issue.title}}}</a>
       <span class="domain">
@@ -23,17 +23,28 @@
 
 <script>
 import store from '../store'
+import api from '../utils/api'
+
+const { fetchIssues } = store.actions
 
 export default {
   name: 'Issue',
+
+  computed: {
+    user () {
+      return store.state.user
+    }
+  },
+
   props: {
     issue: Object,
     index: Number
   },
+
   methods: {
     vote (number) {
-      store.vote(number).then(res => {
-        console.log('vote success.')
+      api.vote(number).then(res => {
+        fetchIssues()
       })
     }
   }
