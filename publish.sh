@@ -10,6 +10,6 @@ npm run build
 
 cp -r index.html callback.html static CNAME dist
 
-surge dist github-voter.frasexu.me
+surge dist github-voter.fraserxu.me
 
 rm -rf dist
