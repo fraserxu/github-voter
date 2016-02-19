@@ -58,9 +58,8 @@ html, body
   font-family Verdana
   font-size 13px
   height 100%
-  margin 0
+  margin 20px 0 0
   padding 0
-  margin-top 20px
 ul
   list-style-type none
   padding 0
