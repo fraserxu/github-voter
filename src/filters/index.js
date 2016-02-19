@@ -6,7 +6,8 @@ export function domain (url) {
 }
 
 export function fromNow (time) {
-  const between = Date.now() / 1000 - Number(time)
+  const d = new Date(time)
+  const between = Date.now() / 1000 - Number(d.getTime() / 1000)
   if (between < 3600) {
     return pluralize(~~(between / 60), ' minute')
   } else if (between < 86400) {
