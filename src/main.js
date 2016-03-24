@@ -22,7 +22,7 @@ let router = new Router({
 })
 
 router.map({
-  '/events': {
+  '/': {
     component: EventsView
   },
   '/oauth': {
@@ -42,7 +42,7 @@ router.beforeEach(() => {
 })
 
 router.redirect({
-  '*': '/events'
+  '*': '/'
 })
 
 router.start(App, '#app')

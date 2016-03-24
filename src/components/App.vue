@@ -5,8 +5,7 @@
       <div class="title">
         <span class="feature"><a href="#/">Github Voter</a></span>
         <div class="source">
-          Built with <a href="http://vuejs.org" target="_blank">Vue.js</a>
-          <a href="https://github.com/fraserxu/github-voter" target="_blank">Source</a>
+          <a href="https://github.com/Wiredcraft/ideas" target="_blank">Source</a>
           <span v-show="!user">
             <a :href="oauthUrl">Login</a>
           </span>
@@ -30,8 +29,6 @@
 import { getCookie } from '../utils/cookie'
 import store from '../store'
 import config from 'json!../../config.json'
-
-const { getUser } = store.actions
 
 export default {
   name: 'App',

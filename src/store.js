@@ -11,12 +11,14 @@ Vue.use(Vuex)
 const GET_USER = 'GET_USER'
 const FETCH_ISSUES = 'FETCH_ISSUES'
 const IS_LOADING_ISSUE = 'IS_LOADING_ISSUE'
+const FETCH_ISSUES_ERROR = 'FETCH_ISSUES_ERROR'
 // const VOTE_ISSUE = 'VOTE_ISSUE'
 
 // State
 const state = {
   user: null,
   issues: [],
+  error: null,
   isLoadingIssue: false
 }
 
@@ -37,6 +39,9 @@ const actions = {
       .then(issues => {
         dispatch(FETCH_ISSUES, issues)
       })
+      .catch(err => {
+        dispatch(FETCH_ISSUES_ERROR, err)
+      })
   }
 }
 
@@ -48,6 +53,10 @@ const mutations = {
 
   [FETCH_ISSUES] (state, issues) {
     state.issues = issues
+  },
+
+  [FETCH_ISSUES_ERROR] (state, error) {
+    state.error = error
   }
 }
 

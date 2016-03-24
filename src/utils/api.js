@@ -12,8 +12,12 @@ const repo = config.repo || 'github-voter'
 const api = new EventEmitter()
 
 api.fetchIssues = () => {
-  return fetch(`https://api.github.com/repos/${owner}/${repo}/issues`)
+  const token = getCookie('oauth-token')
+  return fetch(`https://api.github.com/repos/${owner}/${repo}/issues?access_token=${token}`)
     .then(res => {
+      if (res.status >= 400) {
+        throw new Error(res.statusText)
+      }
       return res.json()
     })
 }
@@ -43,7 +47,7 @@ api.vote = (number) => {
 }
 
 api.getToken = code => {
-  return fetch(`https://whispering-headland-4014.herokuapp.com/authenticate/${code}`, {
+  return fetch(`https://wiredcraft-gatekeeper.herokuapp.com/authenticate/${code}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

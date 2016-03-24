@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='redirect'>
     redirecting...
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
         api.getToken(code)
           .then(res => {
             if (!res.error) {
-              setCookie('oauth-token', res.access_token)
+              setCookie('oauth-token', res.token)
               const { router } = transition.to
               router.go({
                 path: '/events'
@@ -36,3 +36,12 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.redirect
+  box-sizing border-box
+  margin 25px 25px 0
+  transition background-color .2s ease
+  border-bottom 1px solid #f2f2f2
+  padding-bottom 25px
+</style>

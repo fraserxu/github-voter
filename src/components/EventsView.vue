@@ -2,17 +2,16 @@
   <div class="news-view" :class="{ loading: isLoading }">
     <!-- not found -->
     <not-found
-      v-if="error"
-      :error="error">
+      v-if="error">
     </not-found>
 
     <!-- issue list -->
     <issue
-      v-if="!error"
+      v-if="issues.length"
       v-for="issue in issues"
-      :issue="issue"
       :index="$index | formatItemIndex"
-      track-by="id">
+      :issue="issue"
+      track-by="$index">
     </issue>
   </div>
 </template>
@@ -34,14 +33,16 @@ export default {
 
   data () {
     return {
-      isLoading: false,
-      error: null
+      isLoading: false
     }
   },
 
   computed: {
     issues () {
       return store.state.issues
+    },
+    error () {
+      return store.state.error
     }
   },
 

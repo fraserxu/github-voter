@@ -5,12 +5,28 @@
     <title>Github Voter</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <link rel="icon" href="static/logo.png" type="image/x-icon">
+    <style type="text/css">
+      html, body {
+        background-color: #f9f9f9;
+        font-family: Verdana;
+        font-size: 13px;
+        margin: 20px 0 0;
+        padding: 0;
+      }
+      #wrapper {
+        position: relative;
+        max-width: 725px;
+        width: 725px;
+        margin: 0 auto 20px;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">Redirecting...</div>
+    <div id="wrapper">Redirecting back to app...</div>
     <script>
-      var code = window.location.href.match(/\?code=(.*)/)[1]
-      window.location.href = window.location.origin + '/#/oauth/' + '?code=' + code
+      var currentLocation = window.location.href
+      var newLocation = currentLocation.replace('callback.html', '#/oauth/')
+      window.location.href = newLocation
     </script>
   </body>
 </html>
